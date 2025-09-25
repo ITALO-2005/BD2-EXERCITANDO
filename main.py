@@ -1,8 +1,10 @@
-from sqlalchemy import create_engine, text
-engine = create_engine("sqlite:///nome_do_arquivo.db", echo=True)
-# O bloco "with" garante que a conexão será fechada ao final
-with engine.connect() as connection:
-    # `text()` informa ao SQLAlchemy que isso é uma instrução SQL
-    result = connection.execute(text("SELECT 'Olá, mundo!'"))
-    # .scalar() pega o primeiro valor da primeira linha do resultado
-    print(result.scalar())
+from sqlalchemy import create_engine
+from models import Base  # Importamos nossa Base do arquivo models.py
+
+# Criamos o engine para o banco de dados
+engine = create_engine("sqlite:///escola.db", echo=True)
+
+# O SQLAlchemy irá conectar, verificar quais tabelas não existem e criá-las
+print("Gerando o schema do banco de dados...")
+Base.metadata.create_all(engine)
+print("Schema gerado com sucesso!")

@@ -2,23 +2,16 @@ from sqlalchemy import (
     create_engine, Column, Integer, String, Date, ForeignKey
 )
 from sqlalchemy.orm import declarative_base
-
-# 1. Definir a Base
 Base = declarative_base()
 
-# 2. Definir a classe Curso
-class Curso(Base):
-    __tablename__ = 'cursos'
+class Autor(Base):
+    __tablename__ = 'autores'
     id = Column(Integer, primary_key=True)
-    nome = Column(String(100), nullable=False, unique=True)
+    nome = Column(String(100), nullable=False)
 
-# 3. Definir a classe Estudante com a ForeignKey
-class Estudante(Base):
-    __tablename__ = 'estudantes'
+class Livro(Base):
+    __tablename__ = 'livros'
     id = Column(Integer, primary_key=True)
-    nome = Column(String(50), nullable=False)
-    email = Column(String(100), unique=True)
-    curso_id = Column(Integer, ForeignKey('cursos.id'), nullable=False)
+    titulo = Column(String(100), nullable=False)
+    autor_id = Column(Integer, ForeignKey('autores.id'), nullable=False)
 
-    def __repr__(self):
-        return f"Estudante(id={self.id}, nome='{self.nome}')"
